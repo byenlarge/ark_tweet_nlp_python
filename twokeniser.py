@@ -9,7 +9,7 @@ import os
 import errno
 
 class _TaggerProgram:
-
+    """Creates a process instatiatinmg the tagger .jar program."""
     cmd = 'java -XX:ParallelGCThreads=2 -Xmx500m -jar' # taken from original runtagger script
     only_tokenise = False # fault will return tagged items
 
@@ -37,6 +37,7 @@ class _TaggerProgram:
 
 
 class Twagger(_TaggerProgram):
+    """Tag tweets with the tagger program."""
     def __init__(self, path, conll=True):
         _TaggerProgram.__init__(self, path)
         self.conll = conll # output format
@@ -65,8 +66,8 @@ class Twagger(_TaggerProgram):
 
 
 
-
 class Twokeniser(_TaggerProgram):
+    """Only tokenise docuemnts with the tagger program."""
     def __init__(self, path):
         _TaggerProgram.__init__(self, path)
 
@@ -88,19 +89,3 @@ class Twokeniser(_TaggerProgram):
         # recieve the tagged tweet from program output
         out = self.process.stdout.readline()
         return out.decode().split('\t')[0].split(' ')
-
-    def test_read_line(self):
-        print(self.process.stdout.readline().decode().split('\t')[0].split(' '))
-
-if __name__ == '__main__':
-    # testing
-    print('main.')
-    tk = Twokeniser('/home/lawrence/projects/age_prediction/utils/ark-tweet-nlp-0.3.2.jar')
-
-    print(tk.tokenise('test tweet here'))
-    o = tk.tokenise('ayyyayay my bro, heres just one more tweet for youu!!! my bro, heres just one more tweet for youu!!! my bro, heres just one more tweet for youu!!! tweet for youu!!! my bro, heres just one more tweet for youu!!! tweet for youu!!! my bro, heres just one more tweet for youu!!! tweet for youu!!! my bro, heres just one more tweet for youu!!! tweet for youu!!! my bro, heres just one more tweet for youu!!! tweet for youu!!! my bro, heres just one more tweet for youu!!! endchar here to tset. ayyyayay my bro, heres just one more tweet for youu!!! my bro, heres just one more tweet for youu!!! my bro, heres just one more tweet for youu!!! tweet for youu!!! my bro, heres just one more tweet for youu!!! tweet for youu!!! my bro, heres just one more tweet for youu!!! tweet for youu!!! my bro, heres just one more tweet for youu!!! tweet for youu!!! my bro, heres just one more tweet for youu!!! tweet for youu!!! my bro, heres just one more tweet for youu!!! endchar here to tsetayyyayay my bro, heres just one more tweet for youu!!! my bro, heres just one more tweet for youu!!! my bro, heres just one more tweet for youu!!! tweet for youu!!! my bro, heres just one more tweet for youu!!! tweet for youu!!! my bro, heres just one more tweet for youu!!! tweet for youu!!! my bro, heres just one more tweet for youu!!! tweet for youu!!! my bro, heres just one more tweet for youu!!! tweet for youu!!! my bro, heres just one more tweet for youu!!! endchar here to tset')
-    print(o)
-    print('end.')
-    tk.test_read_line()
-    tk.test_read_line()
-
