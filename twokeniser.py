@@ -22,9 +22,6 @@ class _TaggerProgram:
         if not os.path.isfile(path):
             raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), path)
 
-        # test tagger program runs TODO: this part
-        #self.check_program_is_present()
-
         # build commmand to run the tagger program
         self.args = shlex.split(self.cmd)
         self.args.append(path)
@@ -48,6 +45,7 @@ class Twagger(_TaggerProgram):
 
     def tag(self, tweet):
         # remove newlines from tweet, and append newline at end
+        tweet = tweet.replace('\r', '')
         tweet = tweet.replace('\n', ' ') + '\n'
 
         # send tweet to tagger program
